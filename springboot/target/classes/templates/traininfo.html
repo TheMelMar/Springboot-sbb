@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Train Info</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="viewport" 
+          content="width=device-width,  
+                   initial-scale=1" /> 
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link th:href="@{/styles/traininfo/traininfo.css}" rel="stylesheet" />
+  
+</head>
+<body>
+
+<div class="root">
+  <h2>Search for Item...</h2> 
+        <input id="txtSearch" type="text" placeholder="Train ID">
+
+	<h2> Train Info</h2>
+  <p th:text="${trainInfo.train}"></p>
+  <section>
+  <!--for demo wrap-->
+  <h1>Train Info</h1>
+ <div class="tbl-header">
+<table cellpadding="0" cellspacing="0" border="0">
+    <thead>
+             <tr>
+       <th>Bahnhof	</th>
+        <th>Ankunftszeit</th>
+       <th>Abfahrtszeit	</th>
+     </tr>
+    </thead>
+    </table>
+  </div>
+  <div class="tbl-content">
+  <table id="trainInfoTable" cellpadding="0" cellspacing="0" border="0">
+	<tbody>
+     <tr th:each="event:${trainInfo.stationevent}">
+       <td th:text="${event.station.name}" >Bahnhof</td>
+       <td th:text="${event.arrivalTime != null} ? ${event.arrivalTime} : 'Startstation'">Ankunftszeit</td>
+       <td th:text="${event.departureTime != null} ? ${event.departureTime} : 'Endstation'">Abfahrtszeit</td>
+     </tr>
+    </tbody>
+   </table>
+     </div>
+    </section>
+      </div> 
+      
+       <script type="text/javascript" th:src="@{/js/traininfo/traininfo.js}"></script>
+       
+      	 <script th:inline="javascript">
+      	 
+      	 /*<![CDATA[*/
+      	 var trainInfo = /*[[${trainInfo.stationevent}]]*/;
+      	 /*]]>*/
+      	 
+      	 $('#txtSearch').on('keyup',function(){
+      		 var value = $(this).val();
+      		 console.log('Value= ' + value);
+      		 
+      		 //Get Filterd bahnhof list
+      		 var data = FilterFunction(value, trainInfo);
+      		 
+      		//Clear the table and rebuild using new filtered data
+      		rebuildTable(data)
+      	 
+      	 });
+      	 
+      	 function FilterFunction(value, data){
+      	 var filteredData = [];
+      	 for(var i = 0; i<data.length; i++) {
+      	 value = value.toLowerCase();
+      	 var bahnhof = data[i].station.name.toLowerCase();
+      	 var ankunft = data[i].station.name.toLowerCase();
+      	 
+      	 if(bahnhof.includes(value) || ankunft.includes(value)){
+      	 	filteredData.push(data[i]);
+      	 	}
+      	 	}
+      	 	return filteredData;
+      	 	}
+      	 
+      	 function rebuildTable(data){
+      	 	var table = document.getElementById('trainInfoTable')
+      	 	table.innerHTML=''
+      	 	for(var i = 0; i<data.length; i++) {
+      	 		var row = ` <tr>
+      	 			<td>${data[i].station.name}</td>
+      	 			<td>${data[i].arrivalTime}</td>
+      	 			<td>${data[i].departureTime}</td>
+      	 			</tr>`
+      	 			table.innerHTML += row
+      	 			}
+      	 			}
+      	 
+      	 </script>
+</body>
+</html>

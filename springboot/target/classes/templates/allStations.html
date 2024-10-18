@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Station Info</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/styles/stationinfo/stationinfo.css}" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div class="root">
+    <h2>Search for Station</h2>
+    <input id="txtSearch" type="text" placeholder="Train Name or ID">
+
+    <h2>Station Info</h2>
+
+    <section>
+        <h1>Station Info</h1>
+
+        <!-- Table Header -->
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                    <tr>
+                        <th>Train</th>
+                        <th>Departure Time</th>
+                        <th>Train ID</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <!-- Table Body with Station Event Data -->
+        <div class="tbl-content">
+            <table id="stationInfoTable" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                    <!-- Loop through each station event and display the details -->
+                    <tr th:each="station : ${stationInfo.content}">
+                        <td th:text="${station.name}">Train Name</td>
+                        <td th:text="${station.departureTime != null} ? ${station.departureTime} : '(no content)'">Departure Time</td>
+                        <td th:text="${station.id}">Train ID</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<!-- Link external JavaScript file -->
+<script type="text/javascript" th:src="@{/js/stationinfo/stationinfo.js}"></script>
+
+<!-- Inline JavaScript for Search Functionality -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+var stationInfo = /*[[${stationInfo.content}]]*/ [];
+
+// Handle keyup event for search input
+$('#txtSearch').on('keyup', function() {
+    var value = $(this).val().toLowerCase();
+    var filteredData = FilterFunction(value, stationInfo);
+    rebuildTable(filteredData);
+});
+
+// Filter function to search by train name or ID
+function FilterFunction(value, data) {
+    var filteredData = [];
+    for (var i = 0; i < data.length; i++) {
+        var trainName = data[i].name.toLowerCase(); // Adjusting to Station properties
+        var trainId = data[i].id.toLowerCase(); // Adjusting to Station properties
+        if (trainName.includes(value) || trainId.includes(value)) {
+            filteredData.push(data[i]);
+        }
+    }
+    return filteredData;
+}
+
+// Function to rebuild the table with filtered data
+function rebuildTable(data) {
+    var table = document.getElementById('stationInfoTable');
+    table.innerHTML = ''; // Clear existing table data
+    for (var i = 0; i < data.length; i++) {
+        var row = `<tr>
+            <td>${data[i].name}</td>
+            <td>${data[i].departureTime}</td>
+            <td>${data[i].id}</td>
+        </tr>`;
+        table.innerHTML += row; // Append new rows
+    }
+}
+/*]]>*/
+</script>
+
+</body>
+</html>
+

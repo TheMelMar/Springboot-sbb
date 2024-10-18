@@ -1,0 +1,17 @@
+com\roche\icta\demo\springboot\service\TrainInfoService.class
+com\roche\icta\demo\springboot\repository\StationRepository.class
+com\roche\icta\demo\springboot\model\Station.class
+com\roche\icta\demo\springboot\repository\StationEventRepository.class
+com\roche\icta\demo\springboot\model\dto\TrainInfo.class
+com\roche\icta\demo\springboot\model\dto\AllTrainInfo.class
+com\roche\icta\demo\springboot\repository\TrainRepository.class
+com\roche\icta\demo\springboot\model\StationEventKey.class
+com\roche\icta\demo\springboot\service\AllTrainInfoService.class
+com\roche\icta\demo\springboot\controller\TimetableController.class
+com\roche\icta\demo\springboot\model\StationEvent.class
+com\roche\icta\demo\springboot\service\StationInfoService.class
+com\roche\icta\demo\springboot\service\AllStationsInfoService.class
+com\roche\icta\demo\springboot\model\dto\AllStationInfo.class
+com\roche\icta\demo\springboot\model\dto\StationInfo.class
+com\roche\icta\demo\springboot\MyDemoApplication.class
+com\roche\icta\demo\springboot\model\Train.class

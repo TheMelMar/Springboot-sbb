@@ -1,0 +1,81 @@
+
+h1{
+  font-size: 30px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: rgba(255,255,255,0.3);
+ }
+.tbl-content{
+  height:300px;
+  overflow-x:auto;
+  margin-top: 0px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+th{
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+}
+td{
+  padding: 15px;
+  text-align: left;
+  vertical-align:middle;
+  font-weight: 300;
+  font-size: 12px;
+  color: #fff;
+  border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+body{
+  background: -webkit-linear-gradient(left, #d9ae04, #e38202);
+  background: linear-gradient(to right, #d9ae04, #e38202);
+  font-family: 'Roboto', sans-serif;
+}
+section{
+  margin: 50px;
+}
+::-webkit-scrollbar {
+    width: 6px;
+} 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+.root { 
+    display: "block"; 
+    width: 50rem; 
+} 
+#searchInput { 
+    background-repeat: no-repeat; 
+    width: 90%%; 
+    font-size: 16px; 
+    padding: 12px 20px 12px 40px; 
+    border: 1px solid #ddd; 
+    margin-bottom: 12px; 
+} 
+  
+.form { 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+    display: flexbox; 
+    margin: 0 1rem; 
+    padding: 1rem; 
+    width: 98%; 
+    font-size: 16px; 
+    background-color: rgb(247, 246, 246); 
+  
+} 

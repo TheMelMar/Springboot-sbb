@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Trains</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link th:href="@{/styles/traininfo/traininfo.css}" rel="stylesheet" />
+</head>
+<body>
+
+<div class="root">
+    <h2>Search for Trains</h2>
+    <input id="txtSearch" type="text" placeholder="Train ID or Operator">
+    
+    <h2>All Trains</h2>
+
+    <section>
+        <!-- Table Header -->
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                    <tr>
+                        <th>Train ID</th>
+                        <th>Name</th>
+                        <th>Operator</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <!-- Table Body with Train Data -->
+        <div class="tbl-content">
+            <table id="trainTable" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                    <!-- Loop through each train and display the details -->
+                    <tr th:each="train : ${allTrainInfo.content}">
+                        <td th:text="${train.id}">Train ID</td>
+                        <td th:text="${train.name}">Name</td>
+                        <td th:text="${train.operator}">Operator</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Pagination controls -->
+    <div>
+        <ul class="pagination">
+            <li th:if="${allTrainInfo.hasPrevious()}" class="page-item">
+                <a th:href="@{/SBB/homepage/trains(page=${allTrainInfo.number - 1}, size=${allTrainInfo.size})}" class="page-link">Previous</a>
+            </li>
+            <li th:if="${allTrainInfo.hasNext()}" class="page-item">
+                <a th:href="@{/SBB/homepage/trains(page=${allTrainInfo.number + 1}, size=${allTrainInfo.size})}" class="page-link">Next</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script type="text/javascript" th:src="@{/js/traininfo/traininfo.js}"></script>
+
+<!-- Inline JavaScript for search functionality -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+var trains = /*[[${allTrainInfo.content}]]*/ [];
+
+$('#txtSearch').on('keyup', function() {
+    var value = $(this).val().toLowerCase();
+    var filteredData = trains.filter(train => 
+        train.id.toLowerCase().includes(value) || 
+        train.operator.toLowerCase().includes(value)
+    );
+    
+    rebuildTable(filteredData);
+});
+
+function rebuildTable(data) {
+    var table = document.getElementById('trainTable');
+    table.innerHTML = '';
+    data.forEach(train => {
+        var row = `
+            <tr>
+                <td>${train.id}</td>
+                <td>${train.name}</td>
+                <td>${train.operator}</td>
+            </tr>
+        `;
+        table.innerHTML += row;
+    });
+}
+/*]]>*/
+</script>
+
+</body>
+</html>
